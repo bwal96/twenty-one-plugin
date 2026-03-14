@@ -1,15 +1,16 @@
 package TwentyOne;
 
 import javax.inject.Inject;
-import javax.sound.sampled.*;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.HitsplatApplied;
+import net.runelite.client.audio.AudioPlayer;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 @Slf4j
 @PluginDescriptor(
@@ -20,6 +21,9 @@ public class TwentyOnePlugin extends Plugin
 {
 	@Inject
 	private Client client;
+
+	@Inject
+	private AudioPlayer audioPlayer;
 
 	@Override
 	protected void startUp() throws Exception
@@ -46,12 +50,7 @@ public class TwentyOnePlugin extends Plugin
 	{
 		try
 		{
-			InputStream audioSrc = getClass().getResourceAsStream("/sounds/21.wav");
-			InputStream buffered = new BufferedInputStream(audioSrc);
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(buffered);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			clip.start();
+			audioPlayer.play(getClass(), "/sounds/21.wav", 1.0f);
 		}
 		catch (Exception e)
 		{
