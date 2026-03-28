@@ -38,7 +38,10 @@ tasks.withType(JavaCompile).configureEach {
 tasks.register('run', JavaExec) {
 	group = 'runelite'
 	classpath = sourceSets.test.runtimeClasspath
-	mainClass = pluginMainClass
+	mainClass = 'com.twentyone.TwentyOneTest'
+
+        jvmArgs "-ea"
+        args "--developer-mode", "--debug"
 }
 
 tasks.register('shadowJar', Jar) {
